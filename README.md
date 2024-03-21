@@ -181,6 +181,10 @@ Im nächsten Schritt rufst Du eine Testroute auf, die nur aufgerufen werden kann
 }
 ```
 
+## Ready
+
+Du bist jetzt bereit, um Deine Website Besuch zu authentifizieren.
+
 ## Fehlerbehebung
 
 ### 1. Ports besetzt
@@ -240,3 +244,9 @@ Falls das nicht funktioniert, versuche die Berechtigungen des storage Ordners zu
 ```bash
 sudo chmod -R 777 storage
 ```
+
+## Wichtige Links
+
+-   [Example](https://github.com/garethredfern/laravel-vue/tree/main/src)
+-   [vue.js Documentation](https://vuejs.org/guide/introduction)
+-   [Pinia Documentation](https://pinia.vuejs.org/)
