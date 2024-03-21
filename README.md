@@ -85,7 +85,7 @@ http://localhost:8080
 
 Um die authorisierten API Routes testen kannst Du Postman einzurichten.
 
-#### 1. Vorbereigung
+#### 1. Vorbereitung
 
 Überprüfe, ob Du wirklich einen User in Deiner Datenbank hast. Wenn nicht, füge einen hinzu. Führe dazu einfach den Seederaus (sail artisan db:seed).
 
@@ -142,8 +142,8 @@ Im nächsten Schritt rufst Du eine Testroute auf, die nur aufgerufen werden kann
 2. Request anpassen  
    Du hast jetzt zwei Login Requests. Passe den zweiten folgendermassen an:
 
--   Ändere die Methode auf GET
--   Ändere die URL auf localhost/api/users/auth
+    - Ändere die Methode auf GET
+    - Ändere die URL auf localhost/api/users/auth
 
 3. Referer Header einfügen  
    Laravel überprüft auch bei jeder Anfrage den **referer Header**. Diesen musst Du zusätzlich in den Header einfügen, um einen authenticated Request machen zu können. Füge also folgenden Header hinzu:
@@ -162,10 +162,10 @@ Im nächsten Schritt rufst Du eine Testroute auf, die nur aufgerufen werden kann
 5. Anmelden  
    Dieser Fehler teilt Dir mit, dass Du nicht authentifiziert bist. Melde Dich an:
 
--   Gehe zum Login Request
--   Klicke auf send - Du bist jetzt angemeldet
--   Gehe zurück zum Testrequest
--   Klicke auf Send und du solltest folgendes erhalten:
+    - Gehe zum Login Request
+    - Klicke auf send - Du bist jetzt angemeldet
+    - Gehe zurück zum Testrequest
+    - Klicke auf Send und du solltest folgendes erhalten:
 
 ```json
 {
