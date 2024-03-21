@@ -8,7 +8,7 @@ Eine Vorlage für die Verwendung von Laravel mit vue.js inkl. Authentication.
 
 #### 1. Herunterladen
 
-Lade das Repository auf Deinen Computer herunter, benenne es um und verschiebe es in Deinen Projektordner.
+Lade das Repository auf Deinen Computer herunter, benenne es um und verschiebe es in Deinen Projektordner. Gehe alle Punkte Schritt für Schritt durch.
 
 #### 2. Selber einrichten
 
