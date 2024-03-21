@@ -143,7 +143,7 @@ Im nächsten Schritt rufst Du eine Testroute auf, die nur aufgerufen werden kann
    Du hast jetzt zwei Login Requests. Passe den zweiten folgendermassen an:
 
     - Ändere die Methode auf GET
-    - Ändere die URL auf localhost/api/users/auth
+    - Ändere die URL auf **localhost/api/test**
 
 3. Referer Header einfügen  
    Laravel überprüft auch bei jeder Anfrage den **referer Header**. Diesen musst Du zusätzlich in den Header einfügen, um einen authenticated Request machen zu können. Füge also folgenden Header hinzu:

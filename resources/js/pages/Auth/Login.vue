@@ -1,8 +1,10 @@
 <script setup>
 import { useAuthStore } from '../../stores/AuthStore';
-import { authClient } from '../../services/AuthService';
+import AuthService from "@/services/AuthService";
 import {ref} from 'vue';
+import {useRouter} from 'vue-router';
 
+const router = useRouter();
 const store = useAuthStore();
 
 const user = ref({
@@ -14,26 +16,18 @@ const user = ref({
 const login = async() => {
     try {
         // log user in
-        await AuthService.login(payload);
+        await AuthService.login(user.value);
 
         // get user from db
         const authUser = await store.getAuthUser().then(() => {
-            if (!store.authUser) next('/login');
+            if (!store.authUser) router.push("/login");
         });
 
-
         if (authUser) {
-          this.$store.dispatch("auth/setGuest", { value: "isNotGuest" });
-          this.$router.push("/dashboard");
-        } else {
-          const error = Error(
-            "Unable to fetch user after login, check your API settings."
-          );
-          error.name = "Fetch User";
-          throw error;
+          router.push("/dashboard");
         }
       } catch (error) {
-        this.error = getError(error);
+        console.log(error);
       }
 }
 
@@ -54,6 +48,8 @@ const login = async() => {
         <label for="">Passwort</label>
         <input type="password" name="password" v-model="user.password">
     </div>
+
+    <button type="submit">Login</button>
 
 
 </form>

@@ -15,6 +15,12 @@ export const routes = [
         component: () => import("./pages/Test.vue"),
         meta: { requiresAuth: true },
     },
+
+    {
+        path: "/dashboard",
+        component: () => import("./pages/Dashboard.vue"),
+        meta: { requiresAuth: true },
+    },
 ];
 
 
