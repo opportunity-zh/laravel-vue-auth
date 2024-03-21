@@ -1,6 +1,6 @@
-# Laravel Vue
+# Laravel Vue Auth
 
-Eine Vorlage für die Verwendung von Laravel mit vue.js.
+Eine Vorlage für die Verwendung von Laravel mit vue.js inkl. Authentication.
 
 ## Vorbereiten
 
@@ -83,20 +83,22 @@ http://localhost:8080
 
 ### 5. Postman für Testing einrichten
 
-Damit Du die authorisierten API Routes testen kannst, ist es sinnvoll, Postman dafür einzurichten. Weil die Authentifizierung über Cookies erfolgt, die bei jedem Request mitgesendet werden müssen, ist das etwas komplizierter.
+Um die authorisierten API Routes testen kannst Du Postman einzurichten.
 
 #### 1. Vorbereigung
 
-Überprüfe, ob Du wirklich einen User in Deiner Datenbank hast. Wenn nicht, füge einen hinzu. Entweder über den DatabaseSeeder oder mit Artisan Tinker. Falls Du in dieser Erklärung nicht weiter kommst, findest Du [hier](https://codecourse.com/articles/laravel-sanctum-airlock-with-postman/) mehr Details.
+Überprüfe, ob Du wirklich einen User in Deiner Datenbank hast. Wenn nicht, füge einen hinzu. Führe dazu einfach den Seederaus (sail artisan db:seed).
+
+Falls Du in der folgenden Erklärung nicht weiter kommst, findest Du [hier](https://codecourse.com/articles/laravel-sanctum-airlock-with-postman/) eine detaillierte Erklärung inkl. Bilder (auf Englisch).
 
 #### 2. Login einrichten
 
-1. Erstelle einen Login (localhost/api/login) POST Request in Postman
-2. Öffne den Header Reiter und füge folgende Headers ein
+1. Erstelle einen **POST Request** mit der URL **localhost/api/login** in Postman
+2. Öffne den **Header Reiter** und füge folgende Headers ein
     - Content-Type : application/json
     - Accept: application/json
-3. Öffne den Body Reiter und wähle aus: **raw** und **JSON**
-4. Füge folgenden JSON String ein:
+3. Öffne den **Body** Reiter und wähle aus: **raw** und **JSON**
+4. Füge folgenden **JSON** String ein:
 
 ```json
 {
@@ -105,7 +107,7 @@ Damit Du die authorisierten API Routes testen kannst, ist es sinnvoll, Postman d
 }
 ```
 
-5. Öffne den Reiter pre-request Script und füge folgendes Script ein
+5. Öffne den Reiter **pre-request Script** und füge folgendes Script ein
 
 ```javascript
 pm.sendRequest(
@@ -121,12 +123,63 @@ pm.sendRequest(
 );
 ```
 
-Dieses Script hilft Dir dabei, dass die mitgesendete CSRF Cookie in einer Environmentvariable gespeichert wird.
+Dieses Script hilft Dir dabei, dass die mitgesendete **CSRF-Cookie** in einer **Environmentvariable** gespeichert wird.
 
 6. CSRF-Token bei jedem Request mitsenden  
-   Der Token wurd nun als Environmentvarible unter dem Namen **xsrf-token** gespeichert. Füge diesen nun als folgenden Header hinzu:
+   Der Token wurd nun als Environmentvarible unter dem Namen **xsrf-token** gespeichert. Füge diesen nun folgendermassen als Header hinzu:
 
 -   X-XSRF-TOKEN: {{xsrf-token}}
+
+7. Klicke **noch nicht auf "Send"**, damit Du noch nicht angemeldet bist
+
+### 3. Testroute aufrufen
+
+Im nächsten Schritt rufst Du eine Testroute auf, die nur aufgerufen werden kann, wenn man sich authentifiziert (angemeldet hat)
+
+1. Login Request duplizieren
+   Klicke mit der rechten Maustaste oben auf den Tab, in welchem sich der Login Request befindet und wähle aus "Duplicate Tab"
+
+2. Request anpassen
+   Du hast jetzt zwei Login Requests. Passe den zweiten folgendermassen an:
+
+-   Ändere die Methode auf GET
+-   Ändere die URL auf localhost/api/users/auth
+
+3. Referer Header einfügen
+   Laravel überprüft auch bei jeder Anfrage den **referer Header**. Diesen musst Du zusätzlich in den Header einfügen, um einen authenticated Request machen zu können. Füge also folgenden Header hinzu:
+
+    - Referer: localhost
+
+4. Request absenden
+   Versuche nun den Request an die bereits vorhanden Route abzusenden. Du solltest folgenden Fehler erhalten:
+
+```json
+{
+    "message": "Unauthenticated."
+}
+```
+
+5. Anmelden
+   Dieser Fehler teilt Dir mit, dass Du nicht authentifiziert bist. Melde Dich an:
+
+-   Gehe zum Login Request
+-   Klicke auf send - Du bist jetzt angemeldet
+-   Gehe zurück zum Testrequest
+-   Klicke auf Send und du solltest folgendes erhalten:
+
+```json
+{
+    "id": 1,
+    "name": "Hans Mustermann",
+    "email": "test@opportunity-zuerich.ch",
+    "email_verified_at": "2024-03-21T09:05:56.000000Z",
+    "two_factor_secret": null,
+    "two_factor_recovery_codes": null,
+    "two_factor_confirmed_at": null,
+    "created_at": "2024-03-21T09:05:56.000000Z",
+    "updated_at": "2024-03-21T09:05:56.000000Z"
+}
+```
 
 ## Fehlerbehebung
 
@@ -139,9 +192,9 @@ Beispielsweise: listen tcp4 0.0.0.0:80: bind: address already in use
 1. Prozess finden
    Dann musst Du herausfinden, von welchem Prozess diese verwendet werden und diesen Prozess dann beenden. Das machst Du mit folgenden Befehlen. Ersetze dabei **PORT** durch den besetzten Port. Im oberen Beispiel wäre das **80**
 
-```bash
-sudo netstat -laputen | grep ':PORT'
-```
+    ```bash
+    sudo netstat -laputen | grep ':PORT'
+    ```
 
 2. Prozess beenden
    Wenn Du den Prozess gefunden hast, welcher den Port besetzt, findest Du neben dem Namen des Prozesses eine Zahl, welches die **Prozess-ID** ist. Den Prozess kannst Du mit folgendem Befehl beenden. Ersetze <id> mit der tatsächlichen Prozess-ID
@@ -174,7 +227,7 @@ docker stop $(docker ps -a -q)
 docker rm $(docker ps -a -q)
 ```
 
-### Storage Folder Permission Problem
+### 3. Storage Folder Permission Problem
 
 1. Versuche sail up ohne ache zu starten
 

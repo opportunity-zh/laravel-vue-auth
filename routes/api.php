@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Models\User;
 use App\Http\Controllers\TokenController;
 
 Route::post('/sanctum/token', TokenController::class);
@@ -17,7 +18,8 @@ Route::get("/test-me", function () {
  */
 Route::middleware(['auth:sanctum'])->group(function () {
 
-      Route::get('/users/{id}', function ($id) {
-        return User::findOrFail($id);
+    // Testroute: gibt den authentifizierten User zurück
+    Route::get('/users/auth', function () {
+        return User::findOrFail(auth()->id());
     });
   });
