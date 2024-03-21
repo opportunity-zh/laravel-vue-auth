@@ -123,7 +123,7 @@ pm.sendRequest(
 );
 ```
 
-Dieses Script hilft Dir dabei, dass die mitgesendete **CSRF-Cookie** in einer **Environmentvariable** gespeichert wird.
+Dieses Script hilft Dir dabei, dass das beim Login erhaltene **CSRF-Cookie** in einer **Environmentvariable** gespeichert wird und in allen anderen Requests verwendet werden kann.
 
 6. CSRF-Token bei jedem Request mitsenden  
    Der Token wurd nun als Environmentvarible unter dem Namen **xsrf-token** gespeichert. Füge diesen nun folgendermassen als Header hinzu:
@@ -132,25 +132,25 @@ Dieses Script hilft Dir dabei, dass die mitgesendete **CSRF-Cookie** in einer **
 
 7. Klicke **noch nicht auf "Send"**, damit Du noch nicht angemeldet bist
 
-### 3. Testroute aufrufen
+#### 3. Testroute aufrufen
 
 Im nächsten Schritt rufst Du eine Testroute auf, die nur aufgerufen werden kann, wenn man sich authentifiziert (angemeldet hat)
 
-1. Login Request duplizieren
+1. Login Request duplizieren  
    Klicke mit der rechten Maustaste oben auf den Tab, in welchem sich der Login Request befindet und wähle aus "Duplicate Tab"
 
-2. Request anpassen
+2. Request anpassen  
    Du hast jetzt zwei Login Requests. Passe den zweiten folgendermassen an:
 
 -   Ändere die Methode auf GET
 -   Ändere die URL auf localhost/api/users/auth
 
-3. Referer Header einfügen
+3. Referer Header einfügen  
    Laravel überprüft auch bei jeder Anfrage den **referer Header**. Diesen musst Du zusätzlich in den Header einfügen, um einen authenticated Request machen zu können. Füge also folgenden Header hinzu:
 
     - Referer: localhost
 
-4. Request absenden
+4. Request absenden  
    Versuche nun den Request an die bereits vorhanden Route abzusenden. Du solltest folgenden Fehler erhalten:
 
 ```json
@@ -159,7 +159,7 @@ Im nächsten Schritt rufst Du eine Testroute auf, die nur aufgerufen werden kann
 }
 ```
 
-5. Anmelden
+5. Anmelden  
    Dieser Fehler teilt Dir mit, dass Du nicht authentifiziert bist. Melde Dich an:
 
 -   Gehe zum Login Request
