@@ -128,7 +128,7 @@ Dieses Script hilft Dir dabei, dass die mitgesendete **CSRF-Cookie** in einer **
 6. CSRF-Token bei jedem Request mitsenden  
    Der Token wurd nun als Environmentvarible unter dem Namen **xsrf-token** gespeichert. Füge diesen nun folgendermassen als Header hinzu:
 
--   X-XSRF-TOKEN: {{xsrf-token}}
+    - X-XSRF-TOKEN: {{xsrf-token}}
 
 7. Klicke **noch nicht auf "Send"**, damit Du noch nicht angemeldet bist
 
