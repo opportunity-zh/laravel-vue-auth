@@ -1,5 +1,5 @@
 <script setup>
-import { useAuthStore } from '../../stores/AuthStore';
+import { useAuthStore } from '@/stores/AuthStore';
 import AuthService from "@/services/AuthService";
 import {ref} from 'vue';
 import {useRouter} from 'vue-router';
@@ -14,17 +14,18 @@ const user = ref({
 
 
 const login = async() => {
+
     try {
-        // log user in
+
         await AuthService.login(user.value);
 
-        // get user from db
-        const authUser = await store.getAuthUser().then(() => {
-            if (!store.authUser) router.push("/login");
-        });
+        const authUser = await store.getAuthUser();
 
-        if (authUser) {
+        if(authUser) {
           router.push("/dashboard");
+        }
+        else {
+            console.log('error');
         }
       } catch (error) {
         console.log(error);

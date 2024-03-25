@@ -1,6 +1,18 @@
-<script setup></script>
+<script setup>
+import { useAuthStore } from '../stores/AuthStore';
+import Logout from '@/components/Logout.vue';
+
+const store = useAuthStore();
+
+
+
+</script>
 
 
 <template>
-    <h1>Dashboard</h1>
+    <header>
+        <Logout/>
+    </header>
+    <span>Dashboard</span>
+    <h1>Hallo {{ store.authUser.name }}</h1>
 </template>

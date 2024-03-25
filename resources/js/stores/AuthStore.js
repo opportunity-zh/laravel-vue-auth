@@ -1,6 +1,6 @@
 
 import { defineStore } from 'pinia'
-import { authClient } from '../services/AuthService'
+import AuthService from "@/services/AuthService";
 
 
 export const useAuthStore = defineStore('AuthStore', {
@@ -16,11 +16,20 @@ export const useAuthStore = defineStore('AuthStore', {
 
     async getAuthUser(){
         try{
-          this.user = await authClient.getAuthUser();
+          let response = await AuthService.getAuthUser();
+          this.user = response.data.data;
+          return response.data.data;
         }
         catch(error){
           this.user = null;
         }
+    },
+
+
+    async logout(){
+      return AuthService.logout().then(() => {
+        this.user = null;
+      });
     }
 
   },
@@ -32,7 +41,5 @@ export const useAuthStore = defineStore('AuthStore', {
     authUser: (state) => state.user,
   },
 
-  // actions
 
-  // getters
 })

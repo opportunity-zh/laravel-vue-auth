@@ -1,39 +1,38 @@
 import axios from "axios";
-// import store from "@/store";
 import {useAuthStore} from "@/stores/AuthStore";
 
 export const authClient = axios.create({
-  baseURL: 'http://localhost/api/',
+  baseURL: import.meta.env.VITE_BASE_URL,
   withCredentials: true, // required to handle the CSRF token
 });
 
 /*
  * Add a response interceptor
  */
-authClient.interceptors.response.use(
-  (response) => {
-    return response;
-  },
-  function (error) {
-    if (
-      error.response &&
-      [401, 419].includes(error.response.status) &&
-      store.getters["auth/authUser"] &&
-      !store.getters["auth/guest"]
-    ) {
-      store.dispatch("auth/logout");
-    }
-    return Promise.reject(error);
-  }
-);
+// authClient.interceptors.response.use(
+//   (response) => {
+//     return response;
+//   },
+//   function (error) {
+//     if (
+//       error.response &&
+//       [401, 419].includes(error.response.status) &&
+//       store.getters["auth/authUser"] &&
+//       !store.getters["auth/guest"]
+//     ) {
+//       store.dispatch("auth/logout");
+//     }
+//     return Promise.reject(error);
+//   }
+// );
 
 /*
   AUTH METHODS
 */
 export default {
   async login(payload) {
-    await authClient.get("/sanctum/csrf-cookie");
-    return authClient.post("/login", payload);
+      await authClient.get("/sanctum/csrf-cookie");
+      return authClient.post("/login", payload);
   },
 
   logout() {
