@@ -81,9 +81,17 @@ Unter localhost:8080 findest Du PHPMyAdmin. Logindaten findest Du im .env File.
 http://localhost:8080
 ```
 
+### 5. Daten migrieren
+
+Unter database/seeders findest Du eine Klasse DatabaseSeeder. Mit der Hilfe von dieser, können (Fake-) Daten in die DB geschrieben werden. Wenn Du willst, kannst Du diesen öffnen und anschauen, was passiert. Wenn du jetzt sail artisan migrate mit dem passenden flag verwendest, wird dieser Seeder automatisch ausgeführt:
+
+```bash
+sail artisan migrate --seed
+```
+
 ### 5. Postman für Testing einrichten
 
-Um die authorisierten API Routes testen kannst Du Postman einzurichten.
+Um die authorisierten API Routes zu testen, kannst Du Postman einrichten.
 
 #### 1. Vorbereitung
 
